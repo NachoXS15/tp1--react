@@ -15,19 +15,26 @@ import {
     ListItemText,
     Collapse,
     Popover,
-    MenuItem as MenuItemMui
+    MenuItem as MenuItemMui,
+    Divider,
+    Stack
     } from '@mui/material';
 import { Outlet, useLocation, useNavigate, Link as RouterLink } from 'react-router-dom';
 import { drawerMenu, popMenu } from '../../constants/menu';
-import MenuIcon from "@mui/icons-material/Menu"
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import MenuIcon from "@mui/icons-material/Menu";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { useSelector, useDispatch } from "react-redux";
+import { appSelector, appActions } from '../../redux/appRedux';
+import Loading from "../../components/Loading"
 
 //CREACIÓN DE DRAWER
+
 
 const drawerWidth = 280;
 
 const MenuItem = ({item}) => {
+    
     const navigate = useNavigate()
     const {children, title, path} = item
     const [open, setOpen] = useState(false)
@@ -168,8 +175,15 @@ const SideMenu = ({open, onClose}) => {
 
 
 const DashboardLayout = () => {
+    const dispatch = useDispatch()
+    const pageTitle = useSelector(appSelector.pageTitle)
     const [open, setOpen] = useState(false)
+
+
+
     return (
+        <>
+        
         <Box sx={{ display: 'flex' }}>
             <AppBar position="absolute">
                 <Toolbar
@@ -180,19 +194,32 @@ const DashboardLayout = () => {
                     <Box px={2} sx={{cursor: 'pointer'}}>
                        <MenuIcon sx={{color: 'white'}} onClick={()=>setOpen(true)}/> 
                     </Box>
-                    
-                <Typography
-                component="h1"
-                variant="h6"
-                color="inherit"
-                noWrap
-                sx={{ flexGrow: 1 }}
-                >
-                Pilar Tecno Web
-                </Typography>
+                    <Stack direction="row" spacing={2}>
+                        <Typography
+                            component="h1"
+                            variant="h6"
+                            color="inherit"
+                            noWrap
+                            sx={{ flexGrow: 1 }}
+                        >
+                            Pilar Tecno Web
+                        </Typography> 
+                        <Divider orientation='vertical' variant='middle' flexItem xs={{color: 'white'}}/>
+                        <Typography
+                        component="h1"
+                        variant="h6"
+                        color="inherit"
+                        noWrap
+                        sx={{ flexGrow: 1 }}
+                        >
+                        {pageTitle}
+
+                        </Typography>
+                    </Stack>
+
+
 
                 <PopMenu />
-
                 </Toolbar>
             </AppBar>
             <SideMenu open={open} onClose={()=>setOpen(false)}/>
@@ -211,9 +238,12 @@ const DashboardLayout = () => {
             <Toolbar />
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Outlet/>
+            
             </Container>
             </Box>
         </Box>
+        <Loading />
+        </>
     )
 }
 
