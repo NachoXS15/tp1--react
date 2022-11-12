@@ -14,8 +14,7 @@ const Routes = () => {
                 { path: '', element: <Dashboard /> },
                 { path: 'todo', element: <Todo /> },
                 { path: 'fetch-list/', element: <FetchList /> },
-                { path: 'forms', element: <Formularios />}
-
+                { path: 'forms', element: <Formularios />},
             ]
         },
         {path: '/404', element: <NotFound/>},

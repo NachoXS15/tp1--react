@@ -55,7 +55,7 @@ const Dashboard = () => {
                     <Box>
                         <Button component={Link} to="/fetch-list">
                         <ManageSearch/>
-                        FetchList
+                        Pokemons
                     </Button>
                     </Box>
                 </Paper>
